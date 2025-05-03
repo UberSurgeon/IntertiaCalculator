@@ -1,6 +1,4 @@
-
-
-class cylinderTensor:
+class solidCylindertensor:
     def __init__(self, height, radius, mass):
         self.height = height
         self.radius = radius
@@ -13,14 +11,26 @@ class cylinderTensor:
         self.I11 = round((1/12) * self.mass * (3 * (self.radius)**2 + (self.height)**2), 5)
         self.I22 = self.I11
         self.I33 = round((1/2) * self.mass * (self.radius)**2, 5)
-        
+
         return [self.I11, self.I22, self.I33]
+
+    def calcMatrix(self):
+        return f"""
+[
+    [{self.I11}, 0, 0]
+    [0, {self.I22}, 0]
+    [0, 0, {self.I33}]
+]
+        """
+
+    def calcURDF(self):
+        return f"""
+<inertia ixx="{self.I11}" ixy="0" ixz="0" iyy="{self.I22}" iyz="0" izz="{self.I33}" />
+    """
 
 
 def main():
-    cy = cylinderTensor(4,1,5)
-    print(cy.calcTensor())
-    
+    pass
 
 
 if __name__ == "__main__":
